@@ -1,6 +1,6 @@
 var socket = new WebSocket("ws://localhost:8080/ws");
 
-let connect = () => {
+let connect = cb => {
   console.log("Attempting Connection...");
 
   socket.onopen = () => {
@@ -9,6 +9,7 @@ let connect = () => {
 
   socket.onmessage = msg => {
     console.log(msg);
+    cb(msg)
   };
 
   socket.onclose = event => {
@@ -21,8 +22,12 @@ let connect = () => {
 };
 
 let sendMsg = msg => {
-  console.log("sending msg: ", msg);
-  socket.send(msg);
+  if (socket.readyState === WebSocket.OPEN) {
+    console.log("Sending message: ", msg);
+    socket.send(msg);
+  } else {
+    console.error("WebSocket is not open. Current state:", socket.readyState);
+  }
 };
 
 export { connect, sendMsg };
