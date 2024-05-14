@@ -3,7 +3,7 @@ import Header from './components/Header/Header';
 import React, { Component } from "react";
 import { connect, sendMsg } from "./api";
 import ChatHistory from './components/ChatHistory/ChatHistory';
-import ChatInput from './components/ChatInput';
+import ChatInput from './components/ChatInput/ChatInput';
 
 class App extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class App extends Component {
   send(event) {
     if(event.keyCode===13){
       sendMsg(event.target.value);
-      event.target.value=" "
+      event.target.value=""
     }
   }
 
